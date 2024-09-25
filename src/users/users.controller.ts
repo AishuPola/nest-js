@@ -13,6 +13,8 @@ import {
   ParseIntPipe,
 } from '@nestjs/common'
 import { UsersService } from './users.service'
+import { CreateUserDto } from './dto/create-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
 @Controller('users') // /users
 // @ is the decorator.
 export class UsersController {
@@ -39,25 +41,17 @@ export class UsersController {
   @Post()
   create(
     @Body()
-    user: {
-      name: string
-      email: string
-      role: 'INTERN' | 'ENGINEER' | 'ADMIN'
-    },
+    createUserDto: CreateUserDto,
   ) {
-    return this.UsersService.create(user)
+    return this.UsersService.create(createUserDto)
   }
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body()
-    userupdate: {
-      name?: string
-      email?: string
-      role?: 'INTERN' | 'ENGINEER' | 'ADMIN'
-    },
+    updateUserDto: UpdateUserDto,
   ) {
-    return this.UsersService.update(id, userupdate)
+    return this.UsersService.update(id, updateUserDto)
   }
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number) {
