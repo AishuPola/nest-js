@@ -9,6 +9,13 @@ export class TasksService {
   getAllTasks() {
     return this.tasks
   }
+
+  getTaskById(id: string): Task {
+    const task = this.tasks.find((task) => task.id === id)
+    console.log(task)
+    return task
+  }
+
   //   createTask(title: string, description: string): Task {
   //     const task: Task = {
   //       id: uuidv4(),
@@ -19,15 +26,29 @@ export class TasksService {
   //     this.tasks.push(task)
   //     return task
   //   }
+
   createTask(createTaskDto: CreateTaskDto): Task {
     const { title, description } = createTaskDto
     const task: Task = {
       id: uuidv4(),
       title,
       description,
+
       status: TaskStatus.OPEN,
     }
     this.tasks.push(task)
+    return task
+  }
+  deleteTask(id: string): Task {
+    const removetask = this.getTaskById(id)
+    this.tasks = this.tasks.filter((task) => task.id! === id)
+    console.log(removetask)
+    return removetask
+  }
+  updateTask(id: string, status: TaskStatus): Task {
+    const task = this.getTaskById(id)
+    task.status = status
+    console.log(task)
     return task
   }
 }
