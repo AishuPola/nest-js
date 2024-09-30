@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common'
 import { TasksController } from './tasks.controller'
-import { TasksService } from './tasks.service';
+import { TasksService } from './tasks.service'
 
 @Module({
   controllers: [TasksController],
