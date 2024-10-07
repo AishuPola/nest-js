@@ -5,7 +5,7 @@ export type UserDocument = User & Document
 export class User {
   @Prop({ required: true })
   name: string
-  @Prop({ required: true })
+  @Prop({ unique: [true, 'duplicate email entered'] })
   email: string
 
   @Prop({
@@ -14,7 +14,11 @@ export class User {
     type: String,
   })
   role: string
+
+  @Prop({ required: true })
+  password: string
 }
+
 export const UserSchema = SchemaFactory.createForClass(User)
 // Add versionKey: false to the schema options
 UserSchema.set('versionKey', false)
