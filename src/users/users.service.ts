@@ -40,7 +40,7 @@ export class UsersService {
   //     role: 'ADMIN',
   //   },
   // ]
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
   async findAll(role?: 'INTERN' | 'ENGINEER' | 'ADMIN'): Promise<User[]> {
     if (role) {
       const rolesArray = await this.userModel.find({ role }).exec()
@@ -61,6 +61,16 @@ export class UsersService {
     const user = await this.userModel.findById(id)
     if (!user) throw new NotFoundException('user not found')
     return user
+  }
+
+  // async findByEmail(email: string): Promise<any> {
+  //   const user = await this.userModel.findOne({ email }).exec()
+  //   console.log(user)
+  // }
+  async findByEmail(email: string): Promise<User | undefined> {
+    return await this.userModel
+      .findOne({ email: { $regex: new RegExp(`^${email}$`, 'i') } })
+      .exec()
   }
 
   // create(createUserDto: CreateUserDto) {
