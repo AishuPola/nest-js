@@ -33,7 +33,10 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new UnauthorizedException('ivalid password ')
     }
-
+    // In the context of your JWT (JSON Web Token) implementation,
+    //the payload is an object that contains the data you want to include in the token.
+    // This data can be used later to identify the user and their permissions
+    // when they access protected routes.
     const payload = { email: user.email, sub: user._id, role: user.role }
     const token = this.jwtservice.sign(payload)
     console.log(token)
