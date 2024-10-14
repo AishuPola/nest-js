@@ -38,7 +38,10 @@ export class AuthService {
     // This data can be used later to identify the user and their permissions
     // when they access protected routes.
     const payload = { email: user.email, sub: user._id, role: user.role }
-    const token = this.jwtservice.sign(payload)
+    // const token = this.jwtservice.sign(payload)
+    const token = this.jwtservice.sign(payload, {
+      secret: process.env.JWT_SECRET,
+    })
     console.log(token)
     return { accessToken: token }
   }

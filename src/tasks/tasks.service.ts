@@ -6,6 +6,7 @@ import { Model } from 'mongoose'
 import { InjectModel } from '@nestjs/mongoose'
 import { CreateTaskDto } from './dto/create-task.dto'
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto'
+import { User } from 'src/users/schemas/user.schema'
 @Injectable()
 export class TasksService {
   // private tasks: Task[] = []
@@ -106,8 +107,8 @@ export class TasksService {
   //   return task
   // }
 
-  createTask(createTaskDto: CreateTaskDto): Promise<Task> {
-    const newTask = new this.taskModel(createTaskDto)
+  createTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
+    const newTask = new this.taskModel({ ...createTaskDto, user })
     return newTask.save()
   }
   // updateTask(id: string, status: TaskStatus): Task {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Body,
   Controller,
@@ -7,6 +8,8 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Request,
 } from '@nestjs/common'
 import { TasksService } from './tasks.service'
 // import { CreateTaskDto } from './dto/create-task.dto'
@@ -16,7 +19,10 @@ import { CreateTaskDto } from './dto/create-task.dto'
 // import { filter } from 'rxjs'
 import { Task } from './schemas/task.schema'
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto'
+import { AuthGuard } from '@nestjs/passport'
+import { User } from 'src/users/schemas/user.schema'
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('tasks')
 export class TasksController {
   constructor(private taskService: TasksService) {}
@@ -58,8 +64,13 @@ export class TasksController {
   //   // console.log('description:', description)
 
   @Post()
-  async createTask(@Body() CreateTaskDto: CreateTaskDto): Promise<Task> {
-    return this.taskService.createTask(CreateTaskDto)
+  async createTask(
+    @Body() CreateTaskDto: CreateTaskDto,
+    @Request() req,
+  ): Promise<Task> {
+    const user: User = req.user // Retrieve the authenticated user from the request
+    console.log(user)
+    return this.taskService.createTask(CreateTaskDto, user)
   }
   //   return this.taskService.createTask(CreateTaskDto)
   // }
