@@ -6,7 +6,7 @@ import { TasksModule } from './tasks/tasks.module'
 import { MongooseModule } from '@nestjs/mongoose'
 import { AuthModule } from './auth/auth.module'
 import { ConfigModule } from '@nestjs/config'
-import { BooksModule } from './books/books.module';
+import { BooksModule } from './books/books.module'
 
 @Module({
   imports: [
