@@ -6,6 +6,7 @@ import { TasksModule } from './tasks/tasks.module'
 import { MongooseModule } from '@nestjs/mongoose'
 import { AuthModule } from './auth/auth.module'
 import { ConfigModule } from '@nestjs/config'
+import { BooksModule } from './books/books.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ConfigModule } from '@nestjs/config'
     }),
     MongooseModule.forRoot('mongodb://localhost:27017/nestjs_db'),
     AuthModule,
+    BooksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
