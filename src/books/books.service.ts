@@ -16,4 +16,8 @@ export class BooksService {
     const newBook = new this.BookModel(CreateBookDto)
     return newBook.save()
   }
+  async getBookById(id: string): Promise<Book> {
+    const getTask = this.BookModel.findById(id).exec()
+    return getTask
+  }
 }
