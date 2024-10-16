@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 
 export enum BookReadingStatus {
-  READING = 'RADING',
+  READING = 'READING',
   READ = 'READ',
   TO_READ = 'TO_READ',
 }
