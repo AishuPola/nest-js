@@ -21,6 +21,8 @@ import { Task } from './schemas/task.schema'
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto'
 import { AuthGuard } from '@nestjs/passport'
 import { User } from 'src/users/schemas/user.schema'
+import { Roles } from 'src/auth/decorators/roles.decorator'
+import { RolesGuard } from 'src/auth/guards/roles.guard'
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('tasks')
@@ -64,6 +66,8 @@ export class TasksController {
   //   // console.log('description:', description)
 
   @Post()
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   async createTask(
     @Body() CreateTaskDto: CreateTaskDto,
     @Request() req,
