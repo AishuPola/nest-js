@@ -42,6 +42,7 @@ export class TasksController {
   //   }
   // }
   @Get()
+  @Roles('ADMIN', 'ENGINEER')
   async getTasks(@Query() filterDto: GetTasksFilteredDtO): Promise<any> {
     if (Object.keys(filterDto).length) {
       return await this.taskService.getTaskWithFilters(filterDto)
@@ -55,6 +56,7 @@ export class TasksController {
   //   return this.taskService.getTaskById(id)
   // }
   @Get(':id')
+  @Roles('ADMIN', 'ENGINEER')
   getById(@Param('id') id: string): Promise<Task> {
     return this.taskService.getbyId(id)
   }
@@ -84,6 +86,7 @@ export class TasksController {
   // }
 
   @Patch(':id')
+  @Roles('ADMIN', 'ENGINEER')
   async updateTask(
     @Param('id') id: string,
     @Body() UpdateTaskStatusDto: UpdateTaskStatusDto,
@@ -103,6 +106,7 @@ export class TasksController {
   // }
 
   @Delete(':id')
+  @Roles('ADMIN', 'ENGINEER')
   deleteTask(@Param('id') id: string): Promise<Task> {
     return this.taskService.deleteTask(id)
   }
