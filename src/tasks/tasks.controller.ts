@@ -10,6 +10,7 @@ import {
   Delete,
   UseGuards,
   Request,
+  UseInterceptors,
 } from '@nestjs/common'
 import { TasksService } from './tasks.service'
 // import { CreateTaskDto } from './dto/create-task.dto'
@@ -23,6 +24,7 @@ import { AuthGuard } from '@nestjs/passport'
 import { User } from 'src/users/schemas/user.schema'
 import { Roles } from 'src/auth/decorators/roles.decorator'
 import { RolesGuard } from 'src/auth/guards/roles.guard'
+import { TransformInterceptor } from 'src/interceptors/transform.interceptors'
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('tasks')
@@ -43,6 +45,7 @@ export class TasksController {
   // }
   @Get()
   @Roles('ADMIN', 'ENGINEER')
+  @UseInterceptors(TransformInterceptor)
   async getTasks(@Query() filterDto: GetTasksFilteredDtO): Promise<any> {
     if (Object.keys(filterDto).length) {
       return await this.taskService.getTaskWithFilters(filterDto)
@@ -57,6 +60,7 @@ export class TasksController {
   // }
   @Get(':id')
   @Roles('ADMIN', 'ENGINEER')
+  @UseInterceptors(TransformInterceptor)
   getById(@Param('id') id: string): Promise<Task> {
     return this.taskService.getbyId(id)
   }
