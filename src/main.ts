@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv'
 import { LoggingInterceptor } from './interceptors/logging.interceptors'
 import { ErrorsInterceptor } from './interceptors/errors.interceptors'
 //import { TransformInterceptor } from './interceptors/transform.interceptors'
+const port = process.env.PORT || 3000
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.useGlobalPipes(new ValidationPipe())
@@ -15,6 +16,6 @@ async function bootstrap() {
   dotenv.config()
   // Log the NODE_ENV value
   Logger.log(`NODE_ENV is set to: ${process.env.NODE_ENV}`)
-  await app.listen(3000)
+  await app.listen(port)
 }
 bootstrap()
